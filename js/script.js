@@ -1,108 +1,120 @@
 /**
- * Normalise le texte en minuscules et supprime les accents
+ * Normalise le texte en minuscules, supprime les accents et la ponctuation
  * @param {string} texte - Le texte à normaliser
  * @returns {string} Texte normalisé
  */
 function nettoyerTexte(texte) {
-    return texte.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    if (!texte) return "";
+    return texte
+        .toLowerCase()
+        .trim()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "") // 1. Enlève les accents
+        .replace(/[-,.()\/]/g, " ")     // 2. NOUVEAU : Remplace ponctuation (-,.()/) par des espaces
+        .replace(/\s+/g, " ");          // 3. NOUVEAU : Écrase les espaces en double
 }
 
 /**
  * Lance la recherche d'un rayon basée sur la saisie utilisateur
- * Cherche d'abord par rayon, puis par nom de produit
+ * Fonctionne par mots-clés multiples (ex: "librairie policier")
  */
 function lancerRecherche() {
+    document.querySelectorAll(".trajetAllume").forEach(el => el.classList.remove("trajetAllume"));
+    document.querySelectorAll(".cibleAtteinte").forEach(el => el.classList.remove("cibleAtteinte"));
+
     const champSaisie = document.getElementById("saisieUtilisateur");
     const messageInfo = document.getElementById("messageInfo");
 
     // Validation : champ vide
     if (!champSaisie || champSaisie.value.trim() === "") {
-        afficherMessage(messageInfo, "Quel rayon recherchez-vous ? ✍️", "orange");
+        afficherMessage(messageInfo, "Que cherchez-vous ? ✍️", "orange");
         return;
     }
 
-    // Validation : vérifier que les données sont chargées
     if (typeof produitsCultura === 'undefined' || !Array.isArray(produitsCultura)) {
         afficherMessage(messageInfo, "Erreur : Données produits non chargées. 🔌", "red");
         return;
     }
 
+    // 1. On nettoie la saisie et on la découpe en une liste de mots
+    // Exemple : "Librairie Policier" devient ["librairie", "policier"]
     const texteTape = nettoyerTexte(champSaisie.value);
+    const motsTapes = texteTape.split(/\s+/); 
 
-    // Recherche : d'abord par rayon, puis par nom de produit
-    const produitTrouve = produitsCultura.find(p => 
-        nettoyerTexte(p.rayon || "").includes(texteTape)
-    ) || produitsCultura.find(p => 
-        nettoyerTexte(p.nom || "").includes(texteTape)
-    );
+    // 2. On cherche le produit qui correspond
+    const produitTrouve = produitsCultura.find(produit => {
+        // On fusionne toutes les infos du produit dans une seule grande phrase "fourre-tout"
+        const contenuProduit = nettoyerTexte(
+            `${produit.rayon || ""} ${produit.metier || ""} ${produit.nom || ""} ${produit.mots_cles || ""}`
+        );
 
+        // On vérifie que CHAQUE mot tapé par le client se trouve dans ce contenu
+        // La méthode .every() s'assure que toutes les conditions sont vraies
+        return motsTapes.every(mot => contenuProduit.includes(mot));
+    });
+
+    // 3. Affichage du résultat
     if (produitTrouve) {
         afficherChemin(produitTrouve, messageInfo);
     } else {
-        afficherMessage(messageInfo, "Produit ou rayon non trouvé. 🤷‍♂️", "red");
+        afficherMessage(messageInfo, "Aucun rayon trouvé pour cette recherche. 🤷‍♂️", "red");
     }
 }
 
 /**
- * Affiche le chemin calculé vers un rayon et met en avant les cellules
+ * Affiche directement le rayon cible et zoome dessus (Mode simplifié sans GPS)
  * @param {Object} produit - Le produit trouvé
  * @param {Element} messageInfo - L'élément pour afficher les messages
  */
 function afficherChemin(produit, messageInfo) {
-    // Réinitialiser tous les trajets actifs
+    // 1. Nettoyage de l'ancienne recherche
     document.querySelectorAll(".trajetAllume").forEach(el => el.classList.remove("trajetAllume"));
     document.querySelectorAll(".cibleAtteinte").forEach(el => el.classList.remove("cibleAtteinte"));
     
-    // Récupérer le chemin pré-calculé
-    const chemin = cheminsDuMagasin[produit.rayon];
-
-    if (!chemin || chemin.length === 0) {
-        afficherMessage(messageInfo, `Impossible de calculer le chemin vers : ${produit.rayon} 🚫`, "red");
+    // 2. Vérification de sécurité
+    if (!produit || !produit.cases) {
+        afficherMessage(messageInfo, `Position introuvable pour : ${produit.rayon} 🚫`, "red");
         return;
     }
 
-    // Mettre en avant chaque cellule du trajet
-    chemin.forEach(id => {
+    // 3. Récupération des cases du rayon depuis la base de données
+    const listeCases = produit.cases.split(",");
+    let caseCentrale = null;
+
+    // 4. On allume TOUTES les cases du rayon
+    listeCases.forEach(id => {
         const element = document.getElementById(id.trim());
         if (element) {
+            // On utilise la classe du trajet pour la couleur, 
+            // et on ajoute la pulsation cible sur tout le meuble !
             element.classList.add("trajetAllume");
+            element.classList.add("cibleAtteinte");
+            
+            // On mémorise la dernière case trouvée pour centrer la caméra
+            caseCentrale = element;
         }
     });
-    
-    // --- CIBLER L'ARRIVÉE ---
-    // On récupère l'ID de la toute dernière case du chemin
-    let idArrivee = chemin[chemin.length - 1].trim();
-    let caseCible = document.getElementById(idArrivee);
-            
-    if (caseCible) {
-        // On lui ajoute la classe d'animation
-        caseCible.classList.add("cibleAtteinte");
-    }
 
-    // Fermer la popup
+    // 5. Mise à jour de l'interface
     fermerPopup();
-
-    // Afficher le bouton d'effacement du trajet
     document.getElementById("boutonEffacer").classList.add("visible");
 
-    // Descendre vers la cellule d'arrivée pour la mettre en vue (scroll automatique)
-    if (caseCible) {
-        // Le setTimeout permet d'attendre que la popup soit bien fermée
-        // avant de lancer l'animation de défilement
+    // 6. Glissement de la caméra vers le rayon
+    if (caseCentrale) {
+        // Le setTimeout laisse le temps à la modale de se fermer
         setTimeout(() => {
-            caseCible.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
+            caseCentrale.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
         }, 150);
     }
 
-    afficherMessage(messageInfo, `Trouvé ! Direction : ${produit.rayon} ✅`, "green");
+    // 7. Mise à jour des textes
+    afficherMessage(messageInfo, `Trouvé ! Rayon : ${produit.rayon} ✅`, "green");
 
-    // --- NOUVEAU : MISE À JOUR DU HEADER ---
     const sousTitre = document.querySelector(".sousTitreDocument");
     if (sousTitre) {
-        sousTitre.textContent = `En route vers : ${produit.rayon} 📍`;
+        sousTitre.textContent = `Rayon trouvé : ${produit.rayon} 📍`;
         sousTitre.style.color = "var(--couleur-secondaire)"; // Applique ta couleur chocolat
     }
-
 }
 
 /**
@@ -124,6 +136,47 @@ function ouvrirPopup() {
 function fermerPopup() { 
     document.getElementById("popupRecherche").classList.remove("show"); 
 }
+
+/**
+ * Ouvre la recherche ET affiche tous les rayons de l'univers choisi
+ */
+function filtrerParUnivers(nomUnivers) {
+    // 1. On ouvre la popup
+    ouvrirPopup();
+
+    // 2. On remplit le champ
+    const champSaisie = document.getElementById("saisieUtilisateur");
+    if (champSaisie) champSaisie.value = nomUnivers;
+
+    // 3. On affiche les rayons
+    afficherMetierComplet(nomUnivers);
+}
+
+/**
+ * Allume tous les rayons d'un métier (SANS fermer la popup automatiquement)
+ */
+function afficherMetierComplet(metierCible) {
+    // Nettoyage de l'affichage précédent
+    document.querySelectorAll(".trajetAllume").forEach(el => el.classList.remove("trajetAllume"));
+    document.querySelectorAll(".cibleAtteinte").forEach(el => el.classList.remove("cibleAtteinte"));
+
+    const rayonsDuMetier = produitsCultura.filter(p => p.metier === metierCible);
+    console.log(`Métier cherché : ${metierCible}`);
+    console.log(`Rayons trouvés :`, rayonsDuMetier);
+
+    rayonsDuMetier.forEach(produit => {
+        const listeCases = produit.cases.split(",");
+        listeCases.forEach(id => {
+            const element = document.getElementById(id.trim());
+            if (element) {
+                element.classList.add("trajetAllume");
+                element.classList.add("cibleAtteinte");
+            }
+        });
+    });
+    // On retire fermerPopup() d'ici !
+}
+
 
 /**
  * ========== GÉNÉRATION DU PLAN DU MAGASIN ==========
@@ -290,12 +343,13 @@ function chargerListeRayons() {
 }
 
 /**
- * Initialise les écouteurs clavier
+ * Initialise les écouteurs clavier et liste déroulante
  */
 function initialiserEcouteurClavier() {
     const input = document.getElementById("saisieUtilisateur");
     if (!input) return;
 
+    // 1. Écoute du clavier classique (Touche Entrée et Échap)
     input.addEventListener("keydown", (e) => {
         if (e.key === "Enter") {
             e.preventDefault();
@@ -303,6 +357,27 @@ function initialiserEcouteurClavier() {
         }
         if (e.key === "Escape") {
             fermerPopup();
+        }
+    });
+
+    // 2. NOUVEAU : Détection du clic dans la liste déroulante (datalist)
+    input.addEventListener("input", () => {
+        const listId = input.getAttribute("list");
+        if (listId) {
+            const datalist = document.getElementById(listId);
+            if (datalist) {
+                // On vérifie si la valeur actuelle de l'input correspond 
+                // exactement à l'une des options de la liste
+                const optionTrouvee = Array.from(datalist.options).some(
+                    option => option.value === input.value
+                );
+                
+                // Si c'est le cas (le client a cliqué sur une suggestion)
+                if (optionTrouvee) {
+                    lancerRecherche(); // On lance le GPS instantanément
+                    input.blur();      // On retire le focus pour cacher le clavier virtuel
+                }
+            }
         }
     });
 }
