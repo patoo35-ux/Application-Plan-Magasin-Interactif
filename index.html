@@ -31,7 +31,17 @@
     </header>
 
     <!-- Début du contenu principal -->
-    <main>
+    <main class="layout-principal">
+        <aside class="colonne-gauche">
+            <div class="univers-container">
+                <button class="btn-univers" onclick="filtrerParUnivers('Beaux-Arts')">🎨 Beaux-Arts</button>
+                <button class="btn-univers" onclick="filtrerParUnivers('Livre')">📚 Librairie</button>
+                <button class="btn-univers" onclick="filtrerParUnivers('Gaming')">🎮 Gaming</button>
+                <button class="btn-univers" onclick="filtrerParUnivers('Musique')">🎸 Musique</button>
+                <button class="btn-univers" onclick="filtrerParUnivers('Loisirs Créatifs Adultes')">✂️ Loisirs</button>
+            </div>
+        </aside>
+
         <!-- Zone de recherche -->        
         <button 
          type="button" 
@@ -48,13 +58,7 @@
         title="Cliquez pour effacer le trajet affiché"
         >❌ Effacer le trajet</button>
 
-        <div 
-            id="popupRecherche" 
-            class="fenetre-modal"
-            role="dialog"
-            aria-labelledby="popupTitle"
-            aria-modal="true"
-        >
+        <div id="popupRecherche" class="fenetre-modal" role="dialog" aria-labelledby="popupTitle" aria-modal="true">
             <div class="contenu-modal">
                 <span 
                     class="croixFermer" 
@@ -91,11 +95,9 @@
             </div>
         </div>
 
+        <div class="colonne-droite">
         <!-- Mise en forme du Plan : grille générée par JavaScript -->
-        <div 
-            class="magasinContainer" 
-            id="grilleMagasin"
-            role="img"
+        <div  class="magasinContainer" id="grilleMagasin" role="img"
             aria-label="Plan du magasin Cultura avec zones interactives représentant les rayons"
         >
 
@@ -191,10 +193,9 @@
             role="tooltip"
             aria-live="polite"
         ></div>
+
+        </div>
     </main>
 
-    <!-- Zone Pied de Page -->
-    <footer>
-    </footer>
 </body>
 </html>
