@@ -1,0 +1,630 @@
+/* VARIABLES & RESET */
+:root {
+    --couleur-primaire: rgb(10, 10, 108);
+    --couleur-secondaire: chocolate;
+    --fond-page: rgb(229, 229, 235);
+    --text-blanc: whitesmoke;
+}
+
+body {
+    background-color: var(--fond-page);
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+
+
+/*EN-TÊTE & PIED DE PAGE */
+header, footer {
+    display: flex;
+    align-items: center;
+    background-color: var(--couleur-primaire);
+    color: var(--text-blanc);
+    padding: 15px 40px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 4000;
+    justify-content: space-between;
+    height: 150px;
+    box-sizing: border-box;
+}
+
+.headerDocument {
+    display: flex;
+    flex-wrap: wrap; /* Autorise les éléments à passer à la ligne */
+    justify-content: space-between; /* Espace le logo, le h1 et l'adresse sur la première ligne */
+    align-items: center; /* Centre verticalement les éléments de la première ligne */
+    padding: 20px; /* Optionnel : pour aérer l'en-tête */
+}
+
+.imglink {
+    display: flex;  /* Évite les marges fantômes sous l'image */
+}
+
+.imglink img {
+    transition: transform 0.3s ease; /* Rend le zoom du logo fluide et doux */
+    will-change: transform; /* Optimisation GPU */
+}
+
+.imglink:hover img {
+    transform: scale(1.05); /* Léger zoom au survol */
+}
+
+.titreDocument {
+    margin: 0;
+    font-size: 1.6rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+    flex-grow: 1; /* Permet au h1 de prendre l'espace central disponible */
+}
+
+.sousTitreDocument {
+    width: 100%; /* Force l'élément à prendre toute la largeur, le poussant en dessous */
+    text-align: center; 
+    margin-top: 15px; 
+}
+
+.adresseMagasin {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-style: normal;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.adresseMagasin img {
+    filter: brightness(0) invert(0.96); /* Blanchit l'icône SVG pour l'en-tête */
+}
+
+/* RECHERCHE & MODALE */
+#boutonFlottant {
+    position: fixed;
+    bottom:60px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--couleur-secondaire);
+    color: white;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    z-index: 5000;
+    font-size: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+#boutonFlottant:hover {
+    transform: scale(1.1);
+}
+
+#boutonFlottant:active {
+    transform: scale(0.95);
+}
+
+.fenetre-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 6000;
+    place-items: center;
+}
+
+.fenetre-modal.show {
+    display: grid;
+}
+
+.contenu-modal {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 400px;
+    position: relative;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+    animation: slideIn 0.3s ease;
+}
+
+/* Bouton pour effacer le trajet */
+#boutonEffacer {
+    position: fixed;
+    bottom: 20px;
+    left: 30px;
+    padding: 15px 25px;
+    border-radius: 30px;
+    background-color: var(--couleur-primaire);
+    color: var(--text-blanc);
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    z-index: 5000;
+    font-size: 16px;
+    font-weight: bold;
+    /* Le bouton est invisible par défaut et placé un peu plus bas */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+}
+
+/* Classe ajoutée par le JavaScript pour faire apparaître le bouton */
+#boutonEffacer.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0); /* Le bouton remonte doucement à sa place */
+}
+
+#boutonEffacer:active {
+    transform: scale(0.95);
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Bouton fermer (la croix de la pop-up) */
+.croixFermer {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 30px;
+    color: #aaa;
+    cursor: pointer;
+    transition: color 0.2s;
+    user-select: none;
+}
+
+.croixFermer:hover {
+    color: black;
+}
+
+.croixFermer:focus {
+    outline: 2px solid var(--couleur-primaire);
+    outline-offset: 2px;
+}
+
+.barreDeRecherche {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.barreDeRecherche input {
+    padding: 12px;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: inherit;
+    transition: border-color 0.3s;
+}
+
+.barreDeRecherche input:focus {
+    outline: none;
+    border-color: var(--couleur-primaire);
+    box-shadow: 0 0 0 3px rgba(10, 10, 108, 0.1);
+}
+
+.barreDeRecherche input::placeholder {
+    color: #999;
+}
+
+.barreDeRecherche button {
+    padding: 12px 20px;
+    background-color: var(--couleur-primaire);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    min-height: 44px;
+}
+
+.barreDeRecherche button:focus {
+    outline: 2px solid var(--couleur-secondaire);
+    outline-offset: 2px;
+}
+
+.barreDeRecherche button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.barreDeRecherche button:active {
+    transform: translateY(0);
+}
+
+#messageInfo {
+    min-height: 20px;
+    font-size: 12px;
+    margin: 0;
+    font-weight: 500;
+}
+
+/*PLAN DU MAGASIN & ICÔNES SUPERPOSÉES */
+.magasinContainer {
+    transform: scaleY(-1);
+    display: grid;
+    grid-template-columns: repeat(68, 10px);
+    grid-template-rows: repeat(112, 10px);
+    min-height: 1100px;
+    width: max-content;
+    margin: 0 auto 40px auto;
+    border: 4px solid #2F3640;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.35);
+    position: relative;
+}
+
+/* 1. On prépare les cases du plan pour qu'elles puissent retenir une image */
+.magasinContainer > div > div {
+    width: 10px;
+    height: 10px;
+    position: relative; /* CRUCIAL : L'image se calera par rapport à cette case */
+}
+
+.magasinContainer img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /* Le translate centre l'image, le scaleY(-1) la remet à l'endroit */
+    transform: translate(-50%, -50%) scaleY(-1);
+    pointer-events: none;
+    object-fit: contain;
+
+    
+}
+
+
+#maBorne {
+    width: auto; 
+    height: 100px;
+    filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.4));
+    animation: battement 2s infinite;
+}
+#flecheDirection {
+    width: auto; 
+    height: 60px;
+}
+#accueilMagasin {
+    width: 80px; 
+    height: auto;
+    border-radius: 20px;
+    filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.4));
+}
+#atelier {
+    width: auto; 
+    height: 70px;
+    border-radius: 20px;
+    filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.4));
+}
+#zoneOP1 {
+    width: auto; 
+    height: 60px;
+    border-radius: 20px;
+    filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.4));
+}
+#zoneOP2 {
+    width: auto; 
+    height: 50px;
+    border-radius: 20px;
+    filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.4));
+}
+
+#caissesAutomatiques {
+    width: auto; 
+    height: 50px;
+}
+#caissesLigne {
+    width: auto; 
+    height: 80px;
+}
+#accueilLibrairie {
+    width: auto; 
+    height: 40px;
+    filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.4));
+}
+#accueilMvln {
+    width: auto; 
+    height: 40px;
+    filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.4));
+}
+#Parking {
+    width: auto; 
+    height: 30px;
+}
+#laMadeleine {
+    width: auto; 
+    height: 35px;
+    filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.4));
+}
+
+
+
+/* Animations visuelles */
+@keyframes battement {
+    0%, 100% { 
+        opacity: 1; 
+        transform: translate(-50%, -50%) scaleY(-1) scale(1); 
+    }
+    50% { 
+        opacity: 0.7; 
+        /* On garde le centrage et l'inversion, on ajoute juste le rétrécissement */
+        transform: translate(-50%, -50%) scaleY(-1) scale(0.95); 
+    }
+}
+
+@keyframes trajetBrillance {
+    0%, 100% {
+        box-shadow: inset 0 0 5px var(--couleur-secondaire);
+    }
+    50% {
+        box-shadow: inset 0 0 10px var(--couleur-secondaire), 0 0 8px var(--couleur-secondaire);
+    }
+}
+
+/* Animation d'apparition douce */
+@keyframes fadeIn {
+    from { opacity: 0;}
+    to { opacity: 1; }
+}
+
+@keyframes pulsationCible {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(210, 105, 30, 0.7); 
+    }
+    70% {
+        transform: scale(1.6); 
+        box-shadow: 0 0 0 10px rgba(210, 105, 30, 0); 
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(210, 105, 30, 0);
+    }
+}
+
+/* Textures et classes de base */
+.magasinContainer > div > div {
+    width: 10px;
+    height: 10px;
+    z-index: 5;
+}
+
+/* Raccourci pour les bords */
+.borderTop { border-top: 2px solid black; background-color: #ffe6b7; }
+.borderBottom { border-bottom: 2px solid black; background-color: #ffe6b7; }
+.borderLeft { border-left: 2px solid black; background-color: #ffe6b7; }
+
+/* Textures */
+.black { background-color: #2F3640; }
+.parquet { background-color: #ffe6b7; }
+.moquette { background-color: rgb(168, 168, 190); }
+.galerie { background-color: #d0aad1; }
+
+.rayon { background-color: #74706c; cursor: pointer; transition: 0.2s; }
+.rayon:hover { background-color: #a09c98; }
+
+.bois { background-color: burlywood; cursor: pointer; transition: 0.2s; }
+.bois:hover { background-color: #edc9af; }
+
+.trajetAllume {
+    background-color: var(--couleur-secondaire) !important;
+    box-shadow: inset 0 0 5px var(--couleur-secondaire) !important;
+    transition: background-color 0.5s ease, box-shadow 0.5s ease;
+    animation: trajetBrillance 1.5s ease-in-out infinite;
+}
+
+.cibleAtteinte {
+    background-color: #ff3333 !important; 
+    border-radius: 50%; /* Arrondit la case pour faire un point de repère */
+    animation: pulsationCible 1.5s infinite;
+    z-index: 50; /* Passe au-dessus des autres cases */
+    position: relative; /* Nécessaire pour que le z-index fonctionne */
+}
+
+/* NFOBULLE FLOTTANTE */
+.infobulle {
+    position: fixed;
+    background-color: rgba(0, 47, 108, 0.9);
+    color: white;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    pointer-events: none;
+    z-index: 9999;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    white-space: nowrap;
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.infobulle.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.zone-interactive {
+    cursor: pointer;
+}
+
+
+
+/* RESPONSIVE & MOBILE */
+@media (max-width: 1024px) {
+    .magasinContainer, .calqueImages {
+        grid-template-columns: repeat(68, 10px);
+        grid-template-rows: repeat(118, 10px);
+    }
+
+    .magasinContainer > div > div {
+        width: 12px;
+        height: 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    header {
+        height: auto;
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px 20px;
+    }
+
+    .headerDocument {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .imglink img {
+        width: 120px;
+        height: auto;
+    }
+
+    .titreDocument {
+        font-size: 1.3rem;
+        width: 100%;
+    }
+
+    .adresseMagasin {
+        font-size: 0.95rem;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .sousTitreDocument {
+        font-size: 0.95rem;
+    }
+
+    /* Plan du magasin : adapter la taille sur petit écran */
+    .magasinContainer, .calqueImages {
+        grid-template-columns: repeat(68, 10px);
+        grid-template-rows: repeat(118, 10px);
+    }
+    .magasinContainer {
+        min-height: auto;
+        margin-bottom: 20px;
+    }
+
+    .magasinContainer > div > div {
+        width: 10px;
+        height: 10px;
+    }
+
+    /* Bouton flottant accessible au touch */
+    #boutonFlottant {
+        width: 56px;
+        height: 56px;
+        bottom: 20px;
+        right: 20px;
+        font-size: 24px;
+    }
+
+    /* Modale responsive */
+    .contenu-modal {
+        width: 95%;
+        padding: 20px;
+        max-width: 100%;
+    }
+
+    .barreDeRecherche input,
+    .barreDeRecherche button {
+        font-size: 16px; /* Évite le zoom sur iOS */
+        min-height: 44px; /* Zone touchable WCAG */
+    }
+
+    /* Infobulle plus compacte */
+    .infobulle {
+        font-size: 12px;
+        padding: 6px 10px;
+        max-width: 85vw;
+    }
+
+    /* Images icônes légèrement réduites */
+    .icon-overlay {
+        max-width: 24px;
+        max-height: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        font-size: 14px;
+    }
+
+    header {
+        padding: 8px 15px;
+    }
+
+    .titreDocument {
+        font-size: 1.1rem;
+    }
+
+    .adresseMagasin {
+        font-size: 0.85rem;
+    }
+
+    /* Plan encore plus compact */
+    .magasinContainer, .calqueImages {
+        grid-template-columns: repeat(68, 8px);
+        grid-template-rows: repeat(118, 8px);
+    }
+
+    .magasinContainer {
+        border-width: 2px;
+        grid-auto-rows: 8px;
+    }
+
+    .magasinContainer > div > div {
+        width: 8px;
+        height: 8px;
+    }
+
+    #boutonFlottant {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+
+    .contenu-modal {
+        padding: 15px;
+        border-radius: 10px;
+    }
+
+    .barreDeRecherche {
+        gap: 10px;
+    }
+
+    .barreDeRecherche input,
+    .barreDeRecherche button {
+        font-size: 16px;
+        padding: 10px;
+        min-height: 44px;
+    }
+
+    .infobulle {
+        font-size: 11px;
+        padding: 5px 8px;
+    }
+}

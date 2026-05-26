@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projet Stage Prepa.Num.</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="./css/styles.css">
+    <script src="data/dataProduitsCultura.js" defer></script>
+    <script src="data/dataPlanMagasin.js" defer></script>
+    <script src="./data/dataetiquettagerayon.js" defer></script>
+    <script src="./data/datatrajets.js" defer></script>
+    <script src="./js/script.js" defer></script>
+</head>
+
+<body>
+    <!-- Zone En-Tête -->
+    <header class="headerDocument">
+        <a href="/index.html" class="imglink">
+            <img src="./img/logo_cultura.png" alt="Logo Cultura blanc" width="150" height="50">
+        </a>
+        
+        <h1 class="titreDocument">Plan du magasin</h1>
+        
+        <address class="adresseMagasin">
+            <img src="./img/icon_local.svg" alt="Icône de localisation blanc" width="24" height="24">
+            <span>Cultura Saint-Malo</span>
+        </address>
+
+        <h2 class="sousTitreDocument">Trouvez votre chemin en un clic !</h2>
+    </header>
+
+    <!-- Début du contenu principal -->
+    <main>
+        <!-- Zone de recherche -->        
+        <button 
+         type="button" 
+        id="boutonFlottant" 
+        onclick="ouvrirPopup()"
+        aria-label="Ouvrir la recherche de rayon"
+        title="Cliquez pour ouvrir le formulaire de recherche"
+        >🔍</button>
+
+        <button type="button"
+        id="boutonEffacer" 
+        onclick="effacerTrajetManuel()"
+        aria-label="Effacer le trajet affiché"
+        title="Cliquez pour effacer le trajet affiché"
+        >❌ Effacer le trajet</button>
+
+        <div 
+            id="popupRecherche" 
+            class="fenetre-modal"
+            role="dialog"
+            aria-labelledby="popupTitle"
+            aria-modal="true"
+        >
+            <div class="contenu-modal">
+                <span 
+                    class="croixFermer" 
+                    onclick="fermerPopup()"
+                    role="button"
+                    tabindex="0"
+                    aria-label="Fermer la modale"
+                    onkeydown="if(event.key==='Enter' || event.key===' ') fermerPopup()"
+                >&times;</span>
+                
+                <h3 id="popupTitle" style="color: #2F3640; margin-top: 0;">Que cherchez-vous ? 🗺️</h3>
+                
+                <div class="barreDeRecherche">
+                    <label for="saisieUtilisateur" style="display: none;">Rechercher un rayon</label>
+                    <input 
+                        type="text" 
+                        id="saisieUtilisateur" 
+                        list="suggestionsRayons" 
+                        placeholder="Rechercher un rayon..."
+                        aria-describedby="messageInfo"
+                        aria-label="Champ de recherche de rayon"
+                    >
+                    <!-- Datalist pour l'autocomplétion -->
+                    <datalist id="suggestionsRayons"></datalist>
+                    
+                    <button 
+                        type="button" 
+                        id="boutonChercher" 
+                        onclick="lancerRecherche()"
+                        aria-label="Rechercher le chemin vers le rayon"
+                    >Trouver le chemin</button>
+                    <p id="messageInfo" role="status" aria-live="polite"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mise en forme du Plan : grille générée par JavaScript -->
+        <div 
+            class="magasinContainer" 
+            id="grilleMagasin"
+            role="img"
+            aria-label="Plan du magasin Cultura avec zones interactives représentant les rayons"
+        >
+
+            <img 
+                src="./img/borneTactile.png" 
+                alt="Borne de recherche interactive" 
+                class="maBorne" 
+                id="maBorne"
+                aria-label="Borne d'accueil"
+            >
+            <img 
+                src="./img/accueilCultura_ia.jpg" 
+                alt="Accueil magasin"
+                class="accueilMagasin"
+                id="accueilMagasin"
+                aria-label="Accueil du magasin avec une hôtesse d'accueil virtuelle"
+            >
+            <img
+                src="./img/imgAtelier.png" 
+                alt="Atelier" 
+                class="atelier"
+                id="atelier"
+                aria-label="Zone de l'atelier de loisirs créatifs"
+            >
+            <img
+                src="./img/imgOffresPromo.png" 
+                alt="Zone opérations 1" 
+                class="zoneOP1"
+                id="zoneOP1"
+                aria-label="Zone d'offres promotionnelles 1"
+            >
+            <img 
+                src="./img/imgOffresPromo.png" 
+                alt="Zone opérations 2"
+                class="zoneOP2"
+                id="zoneOP2"
+                aria-label="Zone d'offres promotionnelles 2"
+            >
+            <img 
+                src="./img/flecheDirection.png" 
+                alt="Flèche direction"
+                class="flecheDirection"
+                id="flecheDirection"
+                aria-label="Flèche indiquant la direction à suivre"
+            >
+            <img 
+                src="./img/CaissesAutomatiques.png" 
+                alt="Caisses automatiques"
+                class="caissesAutomatiques"
+                id="caissesAutomatiques"
+                aria-label="Zone des caisses automatiques"
+            >
+            <img 
+                src="./img/CaissesLigne.png" 
+                alt="Ligne de caisses" 
+                class="caissesLigne"
+                id="caissesLigne"
+                aria-label="Zone de la ligne de caisses"
+            >
+            <img 
+                src="./img/BulleInfoDroit.png" 
+                alt="Information accueil Librairie" 
+                class="accueilLibrairie"
+                id="accueilLibrairie"
+                aria-label="Information sur l'accueil de la librairie"
+            >
+            <img 
+                src="./img/BulleInfoGauche.png" 
+                alt="Information accueil Mvln" 
+                class="accueilMvln"
+                id="accueilMvln"
+                aria-label="Information sur l'accueil de la musique et du cinéma"
+            >
+            <img 
+                src="./img/iconParking.svg" 
+                alt="Parking à proximité" 
+                class="Parking" 
+                id="Parking"
+                aria-label="Indication de parking à proximité du magasin"
+            >
+            <img 
+                src="./img/logo_LaMadeleine.jpg" 
+                alt="Galerie La Madeleine & Carrefour" 
+                class="laMadeleine" 
+                id="laMadeleine"
+                aria-label="Logo de la Galerie La Madeleine & Carrefour"
+            >
+    </div>
+        <!-- Infobulle flottante affichée au survol des rayons -->
+        <div 
+            id="infobulle-rayon" 
+            class="infobulle hidden"
+            role="tooltip"
+            aria-live="polite"
+        ></div>
+    </main>
+
+    <!-- Zone Pied de Page -->
+    <footer>
+    </footer>
+</body>
+</html>
