@@ -1,5 +1,4 @@
-/**
- * Normalise le texte en minuscules, supprime les accents et la ponctuation
+/** Normalise le texte en minuscules, supprime les accents et la ponctuation
  * @param {string} texte - Le texte à normaliser
  * @returns {string} Texte normalisé
  */
@@ -14,10 +13,8 @@ function nettoyerTexte(texte) {
         .replace(/\s+/g, " ");          // 3. NOUVEAU : Écrase les espaces en double
 }
 
-/**
- * Lance la recherche d'un rayon basée sur la saisie utilisateur
- * Fonctionne par mots-clés multiples (ex: "librairie policier")
- */
+
+/** Lance la recherche d'un rayon basée sur la saisie utilisateur */
 function lancerRecherche() {
     document.querySelectorAll(".trajetAllume").forEach(el => el.classList.remove("trajetAllume"));
     document.querySelectorAll(".cibleAtteinte").forEach(el => el.classList.remove("cibleAtteinte"));
@@ -37,7 +34,6 @@ function lancerRecherche() {
     }
 
     // 1. On nettoie la saisie et on la découpe en une liste de mots
-    // Exemple : "Librairie Policier" devient ["librairie", "policier"]
     const texteTape = nettoyerTexte(champSaisie.value);
     const motsTapes = texteTape.split(/\s+/); 
 
@@ -61,8 +57,8 @@ function lancerRecherche() {
     }
 }
 
-/**
- * Affiche directement le rayon cible et zoome dessus (Mode simplifié sans GPS)
+
+/** Affiche directement le rayon cible et zoome dessus (Mode simplifié sans GPS)
  * @param {Object} produit - Le produit trouvé
  * @param {Element} messageInfo - L'élément pour afficher les messages
  */
@@ -117,9 +113,8 @@ function afficherChemin(produit, messageInfo) {
     }
 }
 
-/**
- * Affiche un message d'information
- */
+
+/** Affiche un message d'information */
 function afficherMessage(element, texte, couleur) {
     if (element) {
         element.textContent = texte;
@@ -127,9 +122,8 @@ function afficherMessage(element, texte, couleur) {
     }
 }
 
-/**
- * Ouvre / Ferme la modale de recherche
- */
+
+/** Ouvre / Ferme la modale de recherche */
 function ouvrirPopup() { 
     document.getElementById("popupRecherche").classList.add("show"); 
 }
@@ -137,24 +131,19 @@ function fermerPopup() {
     document.getElementById("popupRecherche").classList.remove("show"); 
 }
 
-/**
- * Ouvre la recherche ET affiche tous les rayons de l'univers choisi
- */
+
+/** Ouvre la recherche ET affiche tous les rayons de l'univers choisi */
 function filtrerParUnivers(nomUnivers) {
-    // 1. On ouvre la popup
     ouvrirPopup();
 
-    // 2. On remplit le champ
     const champSaisie = document.getElementById("saisieUtilisateur");
     if (champSaisie) champSaisie.value = nomUnivers;
 
-    // 3. On affiche les rayons
     afficherMetierComplet(nomUnivers);
 }
 
-/**
- * Allume tous les rayons d'un métier (SANS fermer la popup automatiquement)
- */
+
+/** Allume tous les rayons d'un métier (SANS fermer la popup automatiquement) */
 function afficherMetierComplet(metierCible) {
     // Nettoyage de l'affichage précédent
     document.querySelectorAll(".trajetAllume").forEach(el => el.classList.remove("trajetAllume"));
@@ -174,14 +163,10 @@ function afficherMetierComplet(metierCible) {
             }
         });
     });
-    // On retire fermerPopup() d'ici !
 }
 
 
-/**
- * ========== GÉNÉRATION DU PLAN DU MAGASIN ==========
- */
-
+/** GÉNÉRATION DU PLAN DU MAGASIN */
 function placerIconesSurPlan() {
     // Dictionnaire : "ID de ton image HTML" -> "ID de la case cible"
     const positionsImages = {
@@ -259,10 +244,8 @@ function genererGrilleMagasin() {
     });
 }
 
-/**
- * ========== ÉTIQUETAGE & INFOBULLE ==========
- */
 
+/** ÉTIQUETAGE & INFOBULLE */
 function etiqueterRayon(tableauCases, nomDuRayon) {
     tableauCases.forEach(idCase => {
         const element = document.getElementById(idCase);
@@ -324,9 +307,8 @@ function initialiserInfobulle() {
     containerMagasin.addEventListener('touchend', () => infobulle.classList.add('hidden'));
 }
 
-/**
- * Charge la liste des rayons pour l'autocomplétion
- */
+
+/** Charge la liste des rayons pour l'autocomplétion */
 function chargerListeRayons() {
     const suggestionBox = document.getElementById('suggestionsRayons');
     if (!suggestionBox) return;
@@ -412,8 +394,8 @@ function effacerTrajetManuel() {
 
 }
 
-// ========== FONCTIONS DE RÉINITIALISATION & INACTIVITÉ ==========
 
+/** FONCTIONS DE RÉINITIALISATION & INACTIVITÉ */
 function reinitialiserBorne() {
     // 1. Effacer le trajet et la cible
     document.querySelectorAll(".trajetAllume").forEach(el => {
@@ -454,9 +436,8 @@ function relancerChrono() {
     chronoInactivite = setTimeout(reinitialiserBorne, TEMPS_INACTIVITE);
 }
 
-/**
- * Initialise le Service Worker pour le mode PWA (offline)
- */
+
+/** Initialise le Service Worker pour le mode PWA (offline) */
 function initialiserPWA() {
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('sw.js')
@@ -465,9 +446,8 @@ function initialiserPWA() {
     }
 }
 
-/**
- * ========== INITIALISATION GLOBALE ==========
- */
+
+/** INITIALISATION GLOBALE */
 document.addEventListener('DOMContentLoaded', () => {
     try {
         // 1. Générer la grille du magasin
