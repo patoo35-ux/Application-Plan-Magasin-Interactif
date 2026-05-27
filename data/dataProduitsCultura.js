@@ -1,4 +1,5 @@
 const produitsCultura = [
+  // Univers : Beaux-Arts
   {
     "rayon": "Châssis",
     "metier": "Beaux-Arts",
@@ -131,6 +132,7 @@ const produitsCultura = [
     "mots_cles": "carnet croquis, sketchbook",
     "cases": "z3308, z3196, z3084, z2972, z2860, z2748, z2636, z2524"
   },
+  // Univers : Loisirs Créatifs Adultes
   {
     "rayon": "Crépon, soie et suspensions",
     "metier": "Loisirs Créatifs Adultes",
@@ -317,30 +319,32 @@ const produitsCultura = [
     "mots_cles": "diamond painting, broderie diamant",
     "cases": "z1594, z1482, z1370, z1258, z1146, z1034"
   },
+  // Univers : Mercerie créative 
   {
     "rayon": "Broderie",
-    "metier": "Loisirs Créatifs Adultes",
+    "metier": "Mercerie créative ",
     "mots_cles": "fil, tambour, aiguille, point de croix",
     "cases": "z1406, z1294, z1182, z1070, z0958, z0846, z0619, z0731, z0843, z0955, z1067, z1179, z1291, z1403"
   },
   {
     "rayon": "Couture",
-    "metier": "Loisirs Créatifs Adultes",
+    "metier": "Mercerie créative ",
     "mots_cles": "tissu, fil, machine a coudre, patron",
     "cases": "z1407, z1295, z1183, z1071, z0513, z0512"
   },
   {
     "rayon": "Customisation",
-    "metier": "Loisirs Créatifs Adultes",
+    "metier": "Mercerie créative e",
     "mots_cles": "patch, ecusson, teinture, peinture textile",
     "cases": "z0599, z0847, z0511, z0510, z0509, z0508"
   },
   {
     "rayon": "Bijouterie et perlerie",
-    "metier": "Loisirs Créatifs Adultes",
+    "metier": "Mercerie créative ",
     "mots_cles": "creation bijou, fermoir, fil, rocaille",
     "cases": "z1410, z1298, z1410, z1298, z1186, z1074, z0962, z0850, z0738, z0626"
   },
+// Univers : Gaming
   {
     "rayon": "Cartes à collectionner / à jouer",
     "metier": "Gaming",
@@ -395,78 +399,74 @@ const produitsCultura = [
     "mots_cles": "sortie jeu video",
     "cases": "z6079, z6191"
   },
+  // Univers : Instruments de musique
   {
     "rayon": "Guitares, accessoires et médiators",
-    "metier": "Instrument de musique",
+    "metier": "Instruments de musique",
     "mots_cles": "instrument, sangle, etui",
     "cases": "z5275, z5274"
   },
   {
     "rayon": "Cordes de guitare",
-    "metier": "Instrument de musique",
+    "metier": "Instruments de musique",
     "mots_cles": "classique, acoustique, electrique",
     "cases": "z5273, z5272"
   },
   {
     "rayon": "Câbles et jacks",
-    "metier": "Instrument de musique",
+    "metier": "Instruments de musique",
     "mots_cles": "connectique audio",
     "cases": "z5271, z5270"
   },
   {
     "rayon": "Batteries et accessoires",
-    "metier": "Instrument de musique",
+    "metier": "Instruments de musique",
     "mots_cles": "baguette, percussion, pad",
     "cases": "z5269, z5268"
   },
   {
     "rayon": "Claviers électriques",
-    "metier": "Instrument de musique",
+    "metier": "Instruments de musique",
     "mots_cles": "synthetiseur, piano numerique",
     "cases": "z5378, z5490"
   },
   {
     "rayon": "Pianos et accessoires",
-    "metier": "Instrument de musique",
+    "metier": "Instruments de musique",
     "mots_cles": "instrument a touche, stand",
     "cases": "z5603, z5715, z5827"
   },
   {
     "rayon": "Instruments traditionnels",
-    "metier": "Instrument de musique",
+    "metier": "Instruments de musique",
     "mots_cles": "ukulele, percu du monde",
     "cases": "z5940, z6052, z5722, z5721"
   },
   {
     "rayon": "Guitares",
-    "metier": "Instrument de musique",
+    "metier": "Instruments de musique",
     "mots_cles": "instrument a corde",
     "cases": "z6165, z6277, z6389, z6501, z6613, z6725"
   },
   {
     "rayon": "Harmonicas",
-    "metier": "Instrument de musique",
+    "metier": "Instruments de musique",
     "mots_cles": "instrument a vent",
     "cases": "z5610, z5609"
   },
   {
     "rayon": "Partitions et méthodes",
-    "metier": "Instrument de musique",
+    "metier": "Instruments de musique",
     "mots_cles": "livre musique, solfege, tablature",
     "cases": "z5608, z5607"
   },
   {
-    "rayon": "Premiers jeux et puzzles",
-    "metier": "Ludo Éducatif",
-    "mots_cles": "eveil, jeu premier age",
-    "cases": "z2509, z2621, z2733, z2845, z2957, z3069, z3181, z3293, z3293, z3405, z3517"
+    "rayon": "Éveil musical",
+    "metier": "Instrument de musique",
+    "mots_cles": "instrument enfant, hochet sonore",
+    "cases": "z5720, z5719"
   },
-  {
-    "rayon": "Modeler et mouler",
-    "metier": "Ludo Éducatif",
-    "mots_cles": "pate a modeler, sable magique",
-    "cases": "z3522, z3410, z3298, z3186, z3074, z2962"
-  },
+// Univers : Livre
   {
     "rayon": "Culture et société - Actualités",
     "metier": "Livre",
@@ -1103,12 +1103,7 @@ const produitsCultura = [
     "mots_cles": "nouveaute sf et fantasy",
     "cases": "z6704, z6703, z6816, z6815, z6929, z6928, z7041, z7040, z7154, z7153, z7266, z7265"
   },
-  {
-    "rayon": "Éveil musical",
-    "metier": "Instrument de musique",
-    "mots_cles": "instrument enfant, hochet sonore",
-    "cases": "z5720, z5719"
-  },
+//Univers Loisirs Numériques
   {
     "rayon": "Casques audio",
     "metier": "Loisirs Numériques",
@@ -1118,7 +1113,7 @@ const produitsCultura = [
   {
     "rayon": "Création numérique",
     "metier": "Loisirs Numériques",
-    "mots_cles": "tablette graphique, logiciel",
+    "mots_cles": "tablette graphique",
     "cases": "z6396, z6508"
   },
   {
@@ -1157,36 +1152,38 @@ const produitsCultura = [
     "mots_cles": "carte cadeau, psn, xbox live, netflix",
     "cases": "z1533, z1645"
   },
+  //Univers : Films et séries
   {
     "rayon": "Séries TV",
-    "metier": "Vidéo",
+    "metier": "Films et séries",
     "mots_cles": "dvd, blu-ray, coffret serie",
     "cases": "z4615, z4614, z4613, z4612"
   },
   {
     "rayon": "Dessins animés",
-    "metier": "Vidéo",
+    "metier": "Films et séries",
     "mots_cles": "dvd enfant, anime, disney",
     "cases": "z3718, z3717, z3716, z3715"
   },
   {
     "rayon": "Figurines et gadgets",
-    "metier": "Vidéo",
+    "metier": "Films et séries",
     "mots_cles": "funko pop, figurine collection, porte cle",
     "cases": "z3719, z3720, z3721, z4055, z4054, z4053, z4052, z4167, z4166, z4165, z4164"
   },
   {
     "rayon": "Grands classiques",
-    "metier": "Vidéo",
+    "metier": "Films et séries",
     "mots_cles": "dvd film culte, cinema",
     "cases": "z4503, z4502, z4501, z4500"
   },
   {
     "rayon": "Offres vidéos et promos",
-    "metier": "Vidéo",
+    "metier": "Films et séries",
     "mots_cles": "solde dvd, promotion film",
     "cases": "z5063, z5062, z5174, z5174, z5257, z5286, z5399, z5368, z5511, z5510, z5623, z5622"
   },
+  //Univers : Papeterie
   {
     "rayon": "Papeterie - Promos et Nouveautés",
     "metier": "Papeterie",
@@ -1403,6 +1400,7 @@ const produitsCultura = [
     "mots_cles": "cahier brouillon, petit format, grand format",
     "cases": "z3481, z3482, z3483, z3484"
   },
+  //Univers : Musique
   {
     "rayon": "Compilations",
     "metier": "Musique",
@@ -1487,124 +1485,140 @@ const produitsCultura = [
     "mots_cles": "solde vinyle",
     "cases": "z3929, z3928, z4041, z4040, z3925, z3924, z4037, z4036, z4265, z4264, z4377, z4376, z4261, z4260, z4373, z4372"
   },
+  //Univers : carterie
   {
     "rayon": "Carterie et emballage cadeaux",
     "metier": "Carterie",
     "mots_cles": "carte anniversaire, papier cadeau, bolduc",
     "cases": "z0739, z0627, z0516, z0517, z0518, z0519, z0520, z0521, z0634, z0746, z0858, z0970, z1082, z1194, z1306, z1418, z0855, z0854, z0967, z0966, z1079, z1078, z1191, z1190"
   },
+  //Univers : Loisirs créatifs enfants
   {
     "rayon": "Perles à repasser et à eau",
-    "metier": "Ludo Éducatif",
+    "metier": "Loisirs créatifs enfants",
     "mots_cles": "hama, aquabeads, activite manuelle",
     "cases": "z2850, z2738, z2626"
   },
   {
     "rayon": "Décorer un support",
-    "metier": "Ludo Éducatif",
+    "metier": "Loisirs créatifs enfants",
     "mots_cles": "boite a peindre, objet a decorer enfant",
     "cases": "z2515, z2627, z2739, z2851, z2963, z3075"
   },
   {
     "rayon": "Coller, plier et découper",
-    "metier": "Ludo Éducatif",
+    "metier": "Loisirs créatifs enfants",
     "mots_cles": "origami enfant, decoupage, collage",
     "cases": "z3187, z3299, z3411, z3523"
   },
   {
     "rayon": "Conteuses et éveil musical",
-    "metier": "Ludo Éducatif",
+    "metier": "Loisirs créatifs enfants",
     "mots_cles": "lunii, toniebox, boite a histoire",
     "cases": "z2510, z2622, z2734, z2846, z2958, z3070"
   },
+
+  {
+    "rayon": "Modeler et mouler",
+    "metier": "Loisirs Créatifs Enfants",
+    "mots_cles": "pate a modeler, sable magique",
+    "cases": "z3522, z3410, z3298, z3186, z3074, z2962"
+  },
   {
     "rayon": "Gommettes et stickers",
-    "metier": "Ludo Éducatif",
+    "metier": "Loisirs créatifs enfants",
     "mots_cles": "autocollant enfant, activite manuelle",
     "cases": "z3182, z3294, z3406, z3518"
   },
   {
     "rayon": "Coffrets créatifs",
-    "metier": "Ludo Éducatif",
+    "metier": "Loisirs créatifs enfants",
     "mots_cles": "kit creatif, cadeau enfant diy",
     "cases": "z3851, z3852, z3738, z3626, z3514, z3402"
   },
   {
     "rayon": "Customiser et coudre",
-    "metier": "Ludo Éducatif",
+    "metier": "Loisirs créatifs enfants",
     "mots_cles": "couture enfant, tricotin, pompon",
     "cases": "z3853, z3854, z3855, z3856"
   },
   {
     "rayon": "Dessiner et colorier",
-    "metier": "Ludo Éducatif",
+    "metier": "Loisirs créatifs enfants",
     "mots_cles": "coloriage magique, pochoir enfant, spirographe",
     "cases": "z3857, z3858, z3859, z3860, z3861, z3862, z3751, z3639"
   },
   {
     "rayon": "Peinture pour enfants",
-    "metier": "Ludo Éducatif",
+    "metier": "Loisirs créatifs enfants",
     "mots_cles": "gouache doigt, peinture a l'eau enfant",
     "cases": "z3303, z3191, z3079, z2967, z2855, z2743, z2631, z2519"
   },
+  //Univers : Jeux Jouets
   {
     "rayon": "Jeux scientifiques",
-    "metier": "Ludo Éducatif",
+    "metier": "Jeux Jouets",
     "mots_cles": "chimie, microscope, experience, telescope",
     "cases": "z2506, z2618, z2730, z2842"
   },
   {
     "rayon": "Apprendre en s'amusant",
-    "metier": "Ludo Éducatif",
+    "metier": "Jeux Jouets",
     "mots_cles": "jeu educatif, electronique, globe",
     "cases": "z2954, z3066, z3178, z3290"
   },
   {
     "rayon": "Puzzles enfants",
-    "metier": "Ludo Éducatif",
+    "metier": "Jeux Jouets",
     "mots_cles": "puzzle ravensburger enfant, encastrement",
     "cases": "z2276, z2388, z2500, z2612, z2724, z2836"
   },
   {
     "rayon": "Puzzles adultes",
-    "metier": "Ludo Éducatif",
+    "metier": "Jeux Jouets",
     "mots_cles": "puzzle 1000 pieces, ravensburger",
     "cases": "z2384, z2496, z2608"
   },
   {
     "rayon": "Dioramas et book nooks",
-    "metier": "Ludo Éducatif",
+    "metier": "Jeux Jouets",
     "mots_cles": "maquette miniature, serre livre, construction bois",
     "cases": "z2720, z2832, z2944"
   },
   {
     "rayon": "Maquillage",
-    "metier": "Ludo Éducatif",
+    "metier": "Jeux Jouets",
     "mots_cles": "grimage, maquillage fete, carnaval, snazaroo",
     "cases": "z3391, z3503"
   },
   {
     "rayon": "Accessoires maquillage",
-    "metier": "Ludo Éducatif",
+    "metier": "Jeux Jouets",
     "mots_cles": "pinceau maquillage, eponge, pochoir visage",
     "cases": "z3391, z3503"
   },
   {
     "rayon": "Construction bois, plastique et magnétique",
-    "metier": "Ludo Éducatif",
+    "metier": "Jeux Jouets",
     "mots_cles": "kapla, geomag, meccano, jeu de construction",
     "cases": "z3723, z3611, z3499, z3387"
   },
   {
     "rayon": "LEGO",
-    "metier": "Ludo Éducatif",
+    "metier": "Jeux Jouets",
     "mots_cles": "brique de construction, lego star wars, city, friends, technic",
     "cases": "z2938, z2826, z2714, z2602, z2490"
   },
   {
     "rayon": "Figurines et jouets",
-    "metier": "Ludo Éducatif",
+    "metier": "Jeux Jouets",
     "mots_cles": "playmobil, schleich, poupee, voiturette",
     "cases": "z3274, z3162, z3050"
+  },
+  {
+    "rayon": "Premiers jeux et puzzles",
+    "metier": "Jeux Jouets",
+    "mots_cles": "eveil, jeu premier age",
+    "cases": "z2509, z2621, z2733, z2845, z2957, z3069, z3181, z3293, z3293, z3405, z3517"
   }
 ];
