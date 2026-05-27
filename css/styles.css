@@ -20,32 +20,6 @@ main {
     align-items: center;
 }
 
-.layout-principal {
-    display: grid;
-    /* 200px pour la colonne boutons, 1fr pour le reste de l'espace disponible */
-    grid-template-columns: 100px 1fr;
-    height: 100vh; /* Prend toute la hauteur de l'écran */
-    gap: 20px;
-    padding: 20px;
-}
-.colonne-gauche {
-    /* Garde les boutons fixés en haut à gauche */
-    position: sticky;
-    top: 150px; 
-    height: fit-content;
-}
-
-.univers-container {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.colonne-droite {
-    /* Le plan s'adapte automatiquement à l'espace restant */
-    overflow: auto; 
-    width: 100%;
-}
 
 
 /*EN-TÊTE & PIED DE PAGE */
@@ -75,19 +49,27 @@ header {
 }
 
 
-.univers-container {
-    position: fixed;       /* Reste fixe par rapport à la fenêtre */
-    left: 10px;            /* Collé à gauche */
-    top: 180px;            /* Ajuste selon la hauteur de ton header */
+.universContainerRight {
+    position: fixed;       
+    right: 40px;       
+    top: 180px;      
     z-index: 5000;
-    
     display: flex;
-    flex-direction: column; /* C'est cette ligne qui met les boutons en colonne */
-    gap: 10px;              /* Espace entre les boutons */
-    
-    /* Pas besoin de justify-content ou flex-wrap ici */
+    flex-direction: column; 
+    gap: 10px;           
+
 }
 
+.universContainerLeft{
+    position: fixed;       
+    left: 40px;       
+    top: 180px;      
+    z-index: 5000;
+    display: flex;
+    flex-direction: column; 
+    gap: 10px;           
+
+}
 .btn-univers {
     min-width: 160px;
     min-height: 60px;
@@ -100,7 +82,9 @@ header {
     cursor: pointer;
     transition: all 0.3s ease; 
     outline: none;
-    text-align: left;       /* Optionnel : aligne le texte à gauche dans le bouton */
+    text-align: left; 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); 
+    
 }
 
 .btn-univers:hover {
@@ -119,7 +103,7 @@ header {
 }
 
 .imglink img {
-    transition: transform 0.3s ease; /* Rend le zoom du logo fluide et doux */
+    transition: transform 0.3s ease; 
     will-change: transform; /* Optimisation GPU */
 }
 
@@ -160,8 +144,8 @@ header {
 #boutonFlottant {
     z-index: 5000;
     position: fixed;
-    top : 160px;
-    right: 40px;
+    bottom : 40px;
+    right:100px;
     width: 80px;
     height: 80px;
     border-radius: 50%;
@@ -217,7 +201,7 @@ header {
 /* Bouton pour effacer le trajet */
 #boutonEffacer {
     position: fixed;
-    bottom: 20px;
+    bottom: 10px;
     right: 30px;
     padding: 15px 25px;
     border-radius: 30px;
