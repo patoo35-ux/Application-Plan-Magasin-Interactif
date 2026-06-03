@@ -9,8 +9,8 @@
   "orientation": "portrait",
   "icons": [
     {
-      "src": "./img/logo_cultura.png",
-      "sizes": "192x192",
+      "src": "./img/Logo100px",
+      "sizes": "100x100",
       "type": "image/png"
     }
   ]
