@@ -1,4 +1,10 @@
 /* VARIABLES & RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 :root {
     --couleur-primaire: rgb(10, 10, 108);
     --couleur-secondaire: chocolate;
@@ -14,50 +20,75 @@ body {
 }
 
 main {
-    padding-top: 160px; 
-    display: flex;
+    margin-top: 0px;
+    margin-left: 300px;
+    display: block;
     flex-direction: column;
     align-items: center;
+    
 }
 
 
-
-/*EN-TÊTE & PIED DE PAGE */
-header {
-    display: flex;
-    align-items: center;
-    background-color: var(--couleur-primaire);
-    color: var(--text-blanc);
-    padding: 15px 40px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-}
-
+/* EN-TÊTE */
 header {
     position: sticky;
     top: 0;
     z-index: 4000;
     justify-content: space-between;
-    height: 150px;
+    height: 140px;
     box-sizing: border-box;
+    align-items: center;
 }
+
 
 .headerDocument {
+    top: 0;
+    padding: 10px 40px;
     display: flex;
+    margin-right: 0;
+    background-color: var(--couleur-primaire);
+    color: var(--text-blanc);
     flex-wrap: wrap; /* Autorise les éléments à passer à la ligne */
     justify-content: space-between; /* Espace le logo, le h1 et l'adresse sur la première ligne */
-    align-items: center; /* Centre verticalement les éléments de la première ligne */
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Partie Gauche */
+#sideBarLeft {
+    position: fixed;
+    left: 0;
+    top: 0;
+    margin-top: 100px;
+    padding: 40px 10px;
+    width: 300px;
+    height: 100vh;
+    overflow-y: auto;
+    background: var(--couleur-primaire);
+    border-right: 1px solid var(--border-color);
+    padding: 20px;
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 
-.universContainerRight {
-    position: fixed;       
-    right: 40px;       
-    top: 180px;      
-    z-index: 5000;
-    display: flex;
-    flex-direction: column; 
-    gap: 10px;           
+/* Classe ajoutée par le JavaScript pour ouvrir le menu */
+    #sideBarLeft.ouvert {
+        transform: translateX(0); /* Ramène la sidebar à sa position d'origine */
+        box-shadow: 4px 0 25px rgba(0, 0, 0, 0.6); /* Ombre forte pour bien la détacher du plan */
+    }
 
+#menuToggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 15px;
+  transition: transform 0.2s ease;
+}
+
+#menuToggle:hover {
+  transform: scale(1.1);
 }
 
 .universContainerLeft{
@@ -76,7 +107,7 @@ header {
     padding: 12px 20px;
     border-radius: 20px;
     border: 2px solid var(--couleur-primaire);
-    background-color: #ffffff;
+    background-color: var(--fond-page);
     color: var(--couleur-primaire);
     font-weight: bold;
     cursor: pointer;
@@ -88,8 +119,8 @@ header {
 }
 
 .btn-univers:hover {
-    background-color: var(--couleur-primaire); 
-    color: #ffffff;   
+    background-color: var(--couleur-secondaire); 
+    color: var(--text-blanc);   
     transform: translateY(-5px) scale(1.05);
     box-shadow: 0 5px 15px rgba(0,0,0,0.2); 
 }
@@ -97,6 +128,7 @@ header {
 .btn-univers:active {
     transform: translateY(0) scale(0.95); /* Le bouton s'écrase légèrement au clic */
 }
+
 
 .imglink {
     display: flex;  /* Évite les marges fantômes sous l'image */
@@ -110,6 +142,7 @@ header {
 .imglink:hover img {
     transform: scale(1.05); /* Léger zoom au survol */
 }
+
 
 .titreDocument {
     margin: 0;
@@ -129,15 +162,12 @@ header {
 .adresseMagasin {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 8px; 
     font-style: normal;
     font-size: 1.1rem;
     font-weight: 500;
 }
 
-.adresseMagasin img {
-    filter: brightness(0) invert(0.96); /* Blanchit l'icône SVG pour l'en-tête */
-}
 
 
 /* RECHERCHE & MODALE */
@@ -169,6 +199,7 @@ header {
     transform: scale(0.95);
 }
 
+/* CSS par défaut (Ordinateur) */
 .fenetre-modal {
     display: none;
     position: fixed;
@@ -176,26 +207,42 @@ header {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
+    /* J'ai passé l'opacité à 0.4 pour laisser le plan plus visible en arrière-plan */
+    background-color: rgba(0, 0, 0, 0.4); 
     z-index: 6000;
-    place-items: center;
+    /* On supprime l'ancien 'place-items: center;' */
 }
 
 .fenetre-modal.show {
-    display: grid;
+    display: flex; /* On utilise Flexbox à la place de grid */
+    align-items: center; /* Centre verticalement */
+    justify-content: flex-end; /* Pousse le contenu tout à droite */
+    padding-right: 80px; /* Laisse un espace pour ne pas coller au bord de l'écran */
 }
 
 .contenu-modal {
-    background: white;
+    background: var(--fond-page);
     padding: 25px;
     border-radius: 15px;
     width: 90%;
     max-width: 400px;
     position: relative;
     box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
-    animation: slideIn 0.3s ease;
+    margin: 0;
+    animation: slideInRight 0.4s ease;
 }
 
+/* Nouvelle animation : glissade depuis la droite */
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
 
 
 /* Bouton pour effacer le trajet */
@@ -213,7 +260,6 @@ header {
     z-index: 5000;
     font-size: 16px;
     font-weight: bold;
-    /* Le bouton est invisible par défaut et placé un peu plus bas */
     opacity: 0;
     visibility: hidden;
     transform: translateY(20px);
@@ -263,56 +309,6 @@ header {
     outline-offset: 2px;
 }
 
-.barreDeRecherche {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.barreDeRecherche input {
-    padding: 12px;
-    border: 2px solid #ccc;
-    border-radius: 6px;
-    font-size: 14px;
-    font-family: inherit;
-    transition: border-color 0.3s;
-}
-
-.barreDeRecherche input:focus {
-    outline: none;
-    border-color: var(--couleur-primaire);
-    box-shadow: 0 0 0 3px rgba(10, 10, 108, 0.1);
-}
-
-.barreDeRecherche input::placeholder {
-    color: #999;
-}
-
-.barreDeRecherche button {
-    padding: 12px 20px;
-    background-color: var(--couleur-primaire);
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: bold;
-    min-height: 44px;
-}
-
-.barreDeRecherche button:focus {
-    outline: 2px solid var(--couleur-secondaire);
-    outline-offset: 2px;
-}
-
-.barreDeRecherche button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-}
-
-.barreDeRecherche button:active {
-    transform: translateY(0);
-}
 
 #messageInfo {
     min-height: 20px;
@@ -329,10 +325,10 @@ header {
     grid-template-rows: repeat(112, 10px);
     min-height: 1100px;
     width: max-content;
-    margin: 0 auto 40px auto;
-    border: 4px solid #2F3640;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.35);
     position: relative;
+    margin-left: 30px;
+    margin-top: 0;
 }
 
 /* 1. On prépare les cases du plan pour qu'elles puissent retenir une image */
@@ -350,10 +346,7 @@ header {
     transform: translate(-50%, -50%) scaleY(-1);
     pointer-events: none;
     object-fit: contain;
-
-    
 }
-
 
 #maBorne {
     width: auto; 
@@ -428,7 +421,6 @@ header {
     }
     50% { 
         opacity: 0.7; 
-        /* On garde le centrage et l'inversion, on ajoute juste le rétrécissement */
         transform: translate(-50%, -50%) scaleY(-1) scale(0.95); 
     }
 }
@@ -442,8 +434,19 @@ header {
     }
 }
 
-/* Animation d'apparition douce */
-@keyframes fadeIn {
+/* Animation spécifique au mobile : glissade depuis le bas */
+@keyframes slideInBottom {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {/* Animation d'apparition douce */
     from { opacity: 0;}
     to { opacity: 1; }
 }
@@ -496,13 +499,12 @@ header {
 
 .cibleAtteinte {
     background-color: #ff3333 !important; 
-    border-radius: 50%; /* Arrondit la case pour faire un point de repère */
+    border-radius: 50%;
     animation: pulsationCible 1.5s infinite;
-    z-index: 50; /* Passe au-dessus des autres cases */
-    position: relative; /* Nécessaire pour que le z-index fonctionne */
+    z-index: 50;
+    position: relative;
 }
 
-/* NFOBULLE FLOTTANTE */
 .infobulle {
     position: fixed;
     background-color: rgba(0, 47, 108, 0.9);
@@ -532,28 +534,129 @@ header {
 
 /* RESPONSIVE & MOBILE */
 @media (max-width: 1024px) {
+    #sideBarLeft {
+        width: 240px; 
+    }
+
+    main {
+        margin-left: 240px;
+    }
+
+    .universContainerLeft {
+        left: 20px;
+    }
+
+    .btn-univers {
+        min-width: 140px;
+        font-size: 0.9rem;
+    }
+
+    .titreDocument {
+        font-size: 1.4rem; 
+    }
+
+    /* 4. SÉCURISATION DU PLAN DU MAGASIN */
     .magasinContainer, .calqueImages {
         grid-template-columns: repeat(68, 10px);
         grid-template-rows: repeat(118, 10px);
     }
 
+    .magasinContainer {
+        margin-left: 10px;
+        max-width: calc(100vw - 260px); 
+        overflow-x: auto;
+    }
+
     .magasinContainer > div > div {
-        width: 12px;
-        height: 12px;
+        width: 10px;
+        height: 10px;
+    }
+    
+    .contenu-modal {
+        width: 80%; /* Prend un peu plus de place sur tablette */
     }
 }
 
 @media (max-width: 768px) {
+    main {
+        margin-left: 0;
+        width: 100%;
+        overflow-x: hidden; /* Empêche le défilement horizontal de toute la page */
+    }
+
+    /* Écrase le comportement "ordinateur" pour recentrer la modale sur mobile */
+    .fenetre-modal.show {
+        justify-content: center; /* Repositionne au centre horizontalement */
+        padding-right: 0; /* Annule l'espace de 80px de la version bureau */
+        
+        align-items: flex-end; /* Positionne la modale vers le bas de l'écran */
+        padding-bottom: 40px; /* Laisse un petit espace avec le bas du téléphone */
+    }
+
+    .contenu-modal {
+        width: 95%; /* Prend presque toute la largeur sur petit écran */
+        padding: 20px;
+        max-width: 100%;
+        animation: slideInBottom 0.3s ease; /* L'animation vient du bas */
+    }
+
+    #sideBarLeft {
+        transform: translateX(-100%); /* Cache la sidebar hors de l'écran */
+        transition: transform 0.3s ease;
+        width: 250px;
+    }
+
+    #menuToggle {
+        display: block; /* On affiche le menu burger sur mobile */
+        color: var(--couleur-secondaire);
+    }
+
+
+
+    .titreDocument,
+    .sousTitreDocument,
+    .adresseMagasin {
+        display: none;
+    }
+
     header {
-        height: auto;
-        flex-direction: column;
-        gap: 10px;
-        padding: 10px 20px;
+        height: 60px; /* Hauteur ultra-fine pour maximiser l'espace du plan */
+        padding: 0;
+        flex-direction: row;
+    }
+
+    .headerDocument {
+        flex-direction: row; /* Force le logo et le bouton sur la même ligne */
+        justify-content: space-between; /* Logo à gauche, bouton à droite */
+        align-items: center;
+        padding: 0 20px;
+        height: 100%;
+        width: 100%;
+        gap: 0;
+    }
+
+   
+    .imglink { /*AJUSTEMENT DU LOGO ET DU BOUTON */
+        display: flex;
+        align-items: center;
+    }
+
+    .imglink img {
+        width: 110px; 
+    }
+
+    #menuToggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        font-size: 28px;
     }
 
     .headerDocument {
         flex-direction: column;
         gap: 10px;
+        padding: 10px;
     }
 
     .imglink img {
@@ -576,56 +679,57 @@ header {
         font-size: 0.95rem;
     }
 
-    /* Plan du magasin : adapter la taille sur petit écran */
     .magasinContainer, .calqueImages {
         grid-template-columns: repeat(68, 10px);
         grid-template-rows: repeat(118, 10px);
     }
+    
     .magasinContainer {
         min-height: auto;
         margin-bottom: 20px;
+        margin-left: 0; /* On retire l'ancienne marge de 30px */
+        max-width: 100vw; /* Contraint la largeur à la taille de l'écran */
+        overflow-x: auto; /* Active le "Swipe" horizontal pour voir tout le plan */
+        -webkit-overflow-scrolling: touch; /* Rend le défilement fluide sur mobile */
+        padding-bottom: 15px; /* Laisse un peu d'espace pour la barre de défilement */
     }
 
     .magasinContainer > div > div {
         width: 10px;
         height: 10px;
     }
-
-    /* Bouton flottant accessible au touch */
-    #boutonFlottant {
-        width: 56px;
-        height: 56px;
+    
+    #boutonFlottant {/* Bouton flottant ajusté (Mobile/Tablette) */
+        width: 50px;
+        height: 50px;
         bottom: 20px;
         right: 20px;
-        font-size: 24px;
+        font-size: 20px; /* Icône un peu plus petite */
+        /* On réduit aussi l'ombre pour qu'il paraisse "moins lourd" */
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); 
     }
 
-    /* Modale responsive */
+    #boutonEffacer {
+        right: 80px; /* On le pousse à gauche pour laisser la place au bouton de recherche */
+        bottom: 20px; /* Aligné verticalement avec le bouton de recherche */
+        padding: 10px 20px; /* Un peu moins haut */
+        font-size: 14px; /* Texte légèrement plus petit */
+    }
+
     .contenu-modal {
         width: 95%;
         padding: 20px;
         max-width: 100%;
     }
 
-    .barreDeRecherche input,
-    .barreDeRecherche button {
-        font-size: 16px; /* Évite le zoom sur iOS */
-        min-height: 44px; /* Zone touchable WCAG */
-    }
-
-    /* Infobulle plus compacte */
     .infobulle {
         font-size: 12px;
         padding: 6px 10px;
         max-width: 85vw;
-    }
-
-    /* Images icônes légèrement réduites */
-    .icon-overlay {
-        max-width: 24px;
-        max-height: 24px;
+        white-space: normal; /* Permet au texte de passer à la ligne s'il est trop long */
     }
 }
+
 
 @media (max-width: 480px) {
     body {
@@ -633,26 +737,27 @@ header {
     }
 
     header {
-        padding: 8px 15px;
+        padding: 8px 10px; /* On réduit encore les marges intérieures */
     }
 
     .titreDocument {
         font-size: 1.1rem;
+        letter-spacing: 0.5px; /* On réduit légèrement l'espacement des lettres */
     }
 
     .adresseMagasin {
         font-size: 0.85rem;
     }
 
-    /* Plan encore plus compact */
+    .imglink img {
+        width: 100px; /* Logo légèrement plus petit pour aérer l'en-tête */
+    }
+
+    /* 2. PLAN DU MAGASIN (RÉDUCTION PROPORTIONNELLE) */
+    /* Passer à 8px réduit la largeur totale à 544px, ce qui demande moins de scroll */
     .magasinContainer, .calqueImages {
         grid-template-columns: repeat(68, 8px);
         grid-template-rows: repeat(118, 8px);
-    }
-
-    .magasinContainer {
-        border-width: 2px;
-        grid-auto-rows: 8px;
     }
 
     .magasinContainer > div > div {
@@ -660,26 +765,25 @@ header {
         height: 8px;
     }
 
+
+/* Bouton flottant ultra-compact (Très petit écran) */
     #boutonFlottant {
-        width: 50px;
-        height: 50px;
-        font-size: 20px;
+        width: 46px; /* On frôle la limite WCAG pour maximiser la vue du plan */
+        height: 46px;
+        font-size: 18px;
+        bottom: 15px;
+        right: 15px;
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
     }
 
     .contenu-modal {
         padding: 15px;
         border-radius: 10px;
+        width: 95%; /* Maximise l'espace de la pop-up sur tout petit écran */
     }
 
     .barreDeRecherche {
         gap: 10px;
-    }
-
-    .barreDeRecherche input,
-    .barreDeRecherche button {
-        font-size: 16px;
-        padding: 10px;
-        min-height: 44px;
     }
 
     .infobulle {
