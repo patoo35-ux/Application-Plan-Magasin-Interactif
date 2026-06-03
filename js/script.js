@@ -57,7 +57,7 @@ function lancerRecherche() {
     }
 }
 
-
+//A VOIR
 /** Affiche directement le rayon cible et zoome dessus (Mode simplifié sans GPS)
  * @param {Object} produit - Le produit trouvé
  * @param {Element} messageInfo - L'élément pour afficher les messages
@@ -131,10 +131,10 @@ function fermerPopup() {
     document.getElementById("popupRecherche").classList.remove("show"); 
 }
 
-
-/** Ouvre la recherche ET affiche tous les rayons de l'univers choisi */
+//A VOIR
+/** Ouvre la recherche ET affiche tous les rayons de l'univers choisi */ 
 function filtrerParUnivers(nomUnivers) {
-    ouvrirPopup();
+   
 
     const champSaisie = document.getElementById("saisieUtilisateur");
     if (champSaisie) champSaisie.value = nomUnivers;
@@ -142,7 +142,7 @@ function filtrerParUnivers(nomUnivers) {
     afficherMetierComplet(nomUnivers);
 }
 
-
+//PARTIEL
 /** Allume tous les rayons d'un métier (SANS fermer la popup automatiquement) */
 function afficherMetierComplet(metierCible) {
     // Nettoyage de l'affichage précédent
@@ -392,6 +392,55 @@ function effacerTrajetManuel() {
         sousTitre.style.color = ""; // Retire la couleur chocolat
     }
 
+}
+
+/**
+ * UTILITAIRES (Mobile & Clics manuels)
+ */
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. On cible les éléments
+    const menuToggle = document.getElementById('menuToggle');
+    const sideBar = document.getElementById('sideBarLeft');
+
+    // On vérifie que les éléments existent pour éviter les erreurs
+    if (menuToggle && sideBar) {
+        
+        // 2. Action au clic sur le bouton Burger
+        menuToggle.addEventListener('click', (event) => {
+            sideBar.classList.toggle('ouvert');
+            
+            // Empêche le clic de se propager et de déclencher la fermeture immédiate
+            event.stopPropagation(); 
+        });
+
+        // 3. Action pour refermer le menu si on clique en dehors
+        document.addEventListener('click', (event) => {
+            // Si le menu est ouvert ET que l'endroit cliqué n'est pas dans la barre latérale
+            if (sideBar.classList.contains('ouvert') && !sideBar.contains(event.target)) {
+                sideBar.classList.remove('ouvert'); // On le ferme
+            }
+        });
+    }
+});
+
+function initMobileMenu() {
+  const toggle = document.getElementById("menuToggle");
+  const sidebar = document.getElementById("sideBarLeft");
+  if (toggle) {
+    toggle.addEventListener("click", () => sidebar.classList.toggle("active"));
+  }
+}
+
+function initLinkHighlight() {
+  document.addEventListener("click", (e) => {
+    if (e.target.closest("#sidebarNav a")) {
+      document.querySelectorAll("#sidebarNav a").forEach(l => l.classList.remove("active"));
+      e.target.classList.add("active");
+      
+      // Fermer le menu mobile sur clic
+      document.getElementById("sideBarMenu").classList.remove("active");
+    }
+  });
 }
 
 
