@@ -9,57 +9,43 @@
     <script src="data/dataProduitsCultura.js" defer></script>
     <script src="data/dataPlanMagasin.js" defer></script>
     <script src="./data/dataetiquettagerayon.js" defer></script>
-    <script src="./data/datatrajets.js" defer></script>
+   <!-- <script src="./data/datatrajets.js" defer></script> --> 
     <script src="./js/script.js" defer></script>
 </head>
 
 <body>
     <!-- Zone En-Tête -->
-    <header class="headerDocument">
-        <a href="/index.html" class="imglink">
-            <img src="./img/logo_cultura.png" alt="Logo Cultura blanc" width="150" height="50">
-        </a>
+    <header>
+        <div class="headerDocument">
+            <a href="/index.html" class="imglink"><img src="./img/logo_cultura.png" alt="Logo Cultura" width="150px"></a>
+             <button id="menuToggle" aria-label="Ouvrir le menu">☰</button>
+             
+            <h1 class="titreDocument">Plan du magasin</h1>
         
-        <h1 class="titreDocument">Plan du magasin</h1>
-        
-        <address class="adresseMagasin">
-            <img src="./img/icon_local.svg" alt="Icône de localisation blanc" width="24" height="24">
-            <span>Cultura Saint-Malo</span>
-        </address>
+            <address class="adresseMagasin">Cultura Saint-Malo</address>
 
-        <h2 class="sousTitreDocument">Trouvez votre chemin en un clic !</h2>
+            <h2 class="sousTitreDocument">Trouvez votre chemin en un clic !</h2>
+        </div>
     </header>
 
-    <!-- Début du contenu principal -->
-    <main>
-        <div class="universContainerRight">
-            <button class="btn-univers" onclick="filtrerParUnivers('Livre')" title="Faire une recherche par univers">📚 Librairie</button>
-            <button class="btn-univers" onclick="filtrerParUnivers('Gaming')" title="Faire une recherche par univers">🎮 Gaming</button>
-            <button class="btn-univers" onclick="filtrerParUnivers('Loisirs Numériques')" title="Faire une recherche par univers">🎧 Loisirs Numériques</button>
-            <button class="btn-univers" onclick="filtrerParUnivers('Instruments Musique')" title="Faire une recherche par univers">🎸 Instruments de Musique</button>
-            <button class="btn-univers" onclick="filtrerParUnivers('Papeterie')" title="Faire une recherche par univers">📝 Papeterie</button>
-        </div>
-        <div class="universContainerLeft">
-            <button class="btn-univers" onclick="filtrerParUnivers('Loisirs Créatifs Adultes')" title="Faire une recherche par univers">✂️ Loisirs Créatifs Adultes</button>
-            <button class="btn-univers" onclick="filtrerParUnivers('Mercerie Couture')" title="Faire une recherche par univers">🧶 Mercerie créative</button>
-            <button class="btn-univers" onclick="filtrerParUnivers('Jeux Jouets')" title="Faire une recherche par univers">🧩 Jeux Jouets</button>
-            <button class="btn-univers" onclick="filtrerParUnivers('Loisirs Créatifs Enfants')" title="Faire une recherche par univers">🪅 Loisirs Créatifs Enfants</button>
-            <button class="btn-univers" onclick="filtrerParUnivers('Beaux-Arts')" title="Faire une recherche par univers">🎨 Beaux-Arts</button>
-        </div>
-        <button 
-            type="button" 
-            id="boutonFlottant" 
-            onclick="ouvrirPopup()"
-            aria-label="Ouvrir la recherche de rayon"
-            title="Cliquez pour ouvrir le formulaire de recherche"
-        >🔍</button>
-
-        <button type="button"
-        id="boutonEffacer" 
-        onclick="effacerTrajetManuel()"
-        aria-label="Effacer le trajet affiché"
-        title="Cliquez pour effacer le trajet affiché"
-        >❌ Effacer la recherche</button>
+    <div class="universContainerLeft" id="sideBarLeft">
+        <button class="btn-univers" onclick="filtrerParUnivers('Livre')" title="Faire une recherche par univers">📚 Librairie</button>
+        <button class="btn-univers" onclick="filtrerParUnivers('Musique')" title="Faire une recherche par univers">💿 CD Musicaux et Vinyles</button>
+        <button class="btn-univers" onclick="filtrerParUnivers('dvd blu ray')" title="Faire une recherche par univers">📀 DVD et Blu Ray</button>
+        <button class="btn-univers" onclick="filtrerParUnivers('Gaming')" title="Faire une recherche par univers">🎮 Gaming</button>
+        <button class="btn-univers" onclick="filtrerParUnivers('Loisirs Numériques')" title="Faire une recherche par univers">🎧 Loisirs Numériques</button>
+        <button class="btn-univers" onclick="filtrerParUnivers('Instruments de musique')" title="Faire une recherche par univers">🎸 Instruments de Musique</button>
+        <button class="btn-univers" onclick="filtrerParUnivers('Papeterie')" title="Faire une recherche par univers">📝 Papeterie</button>
+        <button class="btn-univers" onclick="filtrerParUnivers('Loisirs Créatifs Adultes')" title="Faire une recherche par univers">✂️ Loisirs Créatifs Adultes</button>
+        <button class="btn-univers" onclick="filtrerParUnivers('Mercerie')" title="Faire une recherche par univers">🧶 Mercerie créative</button>
+        <button class="btn-univers" onclick="filtrerParUnivers('Jeux Jouets')" title="Faire une recherche par univers">🧩 Jeux Jouets</button>
+        <button class="btn-univers" onclick="filtrerParUnivers('lce')" title="Faire une recherche par univers">🪅 Loisirs Créatifs Enfants</button>
+        <button class="btn-univers" onclick="filtrerParUnivers('Beaux-Arts')" title="Faire une recherche par univers">🎨 Beaux-Arts</button>
+    </div>
+  
+    <main id="mainWindow">
+        <button type="button" id="boutonFlottant" onclick="ouvrirPopup()" aria-label="Ouvrir la recherche de rayon" title="Cliquez pour ouvrir le formulaire de recherche">🔍</button>
+        <button type="button" id="boutonEffacer" onclick="effacerTrajetManuel()"aria-label="Effacer le trajet affiché" title="Cliquez pour effacer le trajet affiché">❌ Effacer la recherche</button>
 
         <div id="popupRecherche" class="fenetre-modal" role="dialog" aria-labelledby="popupTitle" aria-modal="true">
             <div class="contenu-modal">
@@ -69,10 +55,10 @@
                     role="button"
                     tabindex="0"
                     aria-label="Fermer la modale"
-                 onkeydown="if(event.key==='Enter' || event.key===' ') fermerPopup()"
+                    onkeydown="if(event.key==='Enter' || event.key===' ') fermerPopup()"
             >&times;</span>
     
-            <h3 id="popupTitle" style="color: #2F3640; margin-top: 0;">Que cherchez-vous ? 🗺️</h3>
+            <h3 id="popupTitle" style="color: #2F3640; margin-top: 0;">Que cherchez-vous ? ✍️</h3>
     
             <div class="barreDeRecherche">
                 <label for="saisieUtilisateur" style="display: none;">Rechercher un rayon</label>
@@ -190,8 +176,6 @@
                 id="laMadeleine"
                 aria-label="Logo de la Galerie La Madeleine & Carrefour"
             >
-            
-            
         </div>
 
         <!-- Infobulle flottante affichée au survol des rayons -->
@@ -199,4 +183,4 @@
         </div>
     </main>
 </body>
-</html> 
+</html>  
